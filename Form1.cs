@@ -20,7 +20,9 @@ namespace TTT
 
         private void AddTaskButton_Click(object sender, EventArgs e)
         {
-            TasksContainer.Controls.Add(new TTTRow());
+            var row = new TTTRow();
+            row.OnStateSwitched += OnTTTRowStateSwitched;
+            TasksContainer.Controls.Add(row);
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -34,6 +36,11 @@ namespace TTT
         }
 
         private void TotalTime_Label_Click(object sender, EventArgs e)
+        {
+            CalculateTotal();
+        }
+
+        private void OnTTTRowStateSwitched()
         {
             CalculateTotal();
         }

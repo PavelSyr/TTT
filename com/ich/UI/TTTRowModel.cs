@@ -19,7 +19,10 @@ namespace TTT.com.ich.UI
 
         private TimeSpan _TimeDiff
         {
-            get { return _PausedAt - _StartedAt - _PauseSum; }
+            get
+            {
+                return (IsPaused) ? (_PausedAt - _StartedAt - _PauseSum) : (DateTime.Now - _StartedAt - _PauseSum);
+            }
         }
 
         public string CreatedAt { get { return _CreatedAt.ToShortTimeString(); } }

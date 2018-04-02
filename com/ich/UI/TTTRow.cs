@@ -12,6 +12,7 @@ namespace TTT.com.ich.UI
 {
     public partial class TTTRow : UserControl
     {
+        public event Action OnStateSwitched;
         private TTTRowModel _model;
 
         public double TotalTime
@@ -51,6 +52,7 @@ namespace TTT.com.ich.UI
         private void State_Button_Click(object sender, EventArgs e)
         {
             _model.SwitchState();
+            OnStateSwitched?.Invoke();
         }
 
         private void Delet_Button_Click(object sender, EventArgs e)
@@ -63,6 +65,13 @@ namespace TTT.com.ich.UI
             _model.OnPaused -= OnPaused;
             _model.OnStarted -= OnStarted;
             _model = null;
+            if (OnStateSwitched != null)
+            {
+                foreach(var d in OnStateSwitched.GetInvocationList())
+                {
+                    OnStateSwitched -= (Action)d;
+                }
+            }
             base.OnHandleDestroyed(e);
         }
 
